@@ -16,10 +16,9 @@ public class VariableCompartida {
     }
     
     public void aumentar(){
-        while(contador<5000){
-            contador=contador+1;
+        for (int i = 0; i < 5000; i++) {
+            contador++;
         }
-    
     }
 
     public int getContador() {

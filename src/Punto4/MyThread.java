@@ -11,37 +11,43 @@ package Punto4;
  */
 public class MyThread implements Runnable{
     private int inicioFila=0;
-    private int finFila=0;
+ 
     private int inicioColumna=0;
-    private int finColumna=0;
+    
     private int[][] matriz=null;
     private int[][] matriz2=null;
-    private int[][] matriz3=null;
+    private int[] matriz3=new int[1];
+    private int tamañoLista=0;
     private Thread thread=null;
 
     public MyThread() {
     }
-    public Thread start(int newinicioFila, int newfinFila,
-            int newinicioColumna, int newfinColumna, int [][] newmatriz,
-            int [][]newmatriz2){
+    public Thread start(int newinicioFila,int newinicioColumna,  int [][] newmatriz,
+            int [][]newmatriz2, int newTamañoLista){
         
         inicioFila=newinicioFila;
-        finFila=newfinFila;
         inicioColumna=newinicioColumna;
-        finColumna=newfinColumna;
+        
         matriz=newmatriz;
         matriz2=newmatriz2;
+        tamañoLista=newTamañoLista;
         thread=new Thread(this);
         thread.start();
         return thread;
     }
 
-    public int[][] getMatriz3() {
+    public int[] getMatriz3() {
         return matriz3;
+    }
+
+    public Thread getThread() {
+        return thread;
     }
     
     @Override
     public void run() {
-       matriz3=noThread.calcularProducto(inicioFila, inicioColumna, finFila, finColumna, matriz, matriz2);
+        synchronized(matriz3){
+       matriz3=noThread.calcularProducto(inicioFila, inicioColumna, matriz, matriz2,tamañoLista);
+        }
     }
 }
